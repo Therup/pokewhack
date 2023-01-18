@@ -1,0 +1,30 @@
+* {
+    margin: auto;
+    
+}
+.flex {
+    display: flex;
+    width: 600px;
+}
+.flex div {
+    margin-right: 20px;
+}
+.grid {
+    width: 600px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    
+  }
+  .grid div   {
+
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+  }
+  img {
+    width: 100px;
+  }
+  .bold {
+    font-size: 20px;
+    font-weight: bold;
+  }

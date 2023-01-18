@@ -1,0 +1,15 @@
+<div class="flex">
+    <div><button class="bold" (click)='__timer.playGame($event)' (click)="game()" >Start Timer</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+     <div class="bold">{{__timer.remainingTime}} TIME</div> <!--Tid kvar-->
+     <div class="bold">Points {{__count.count}}</div> <!--Poängräknare-->
+ </div>  
+ <div class="grid">
+     <div *ngFor="let pipe of holes; let i = index" #newHole [ngClass]="'hole hole' + i" > <!--Loopar över holes för att skapa ett rutnät dynamiskt-->
+         <ng-container *ngIf="holes[i].moleOrHole == true else mole"> <!--Visas om vi har true-->
+             <img src={{holes[i].hole}} alt="">
+         </ng-container>
+         <ng-template  #mole> <!--Visas om vi har false-->
+             <img  (click)="__count.onPlus()" (click)="holes[i].moleOrHole = true " src={{holes[i].mole}} alt="">    <!--clickhandler för poängen--> 
+         </ng-template>
+     </div>
+ </div>
