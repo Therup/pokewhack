@@ -1,15 +1,29 @@
-<div class="flex">
-    <div><button class="bold" (click)='__timer.playGame($event)' (click)="game()" >Start Timer</button></div> <!-- Här startar vi nedräkningen samt spelet -->
-     <div class="bold">{{__timer.remainingTime}} TIME</div> <!--Tid kvar-->
-     <div class="bold">Points {{__count.count}}</div> <!--Poängräknare-->
- </div>  
- <div class="grid">
-     <div *ngFor="let pipe of holes; let i = index" #newHole [ngClass]="'hole hole' + i" > <!--Loopar över holes för att skapa ett rutnät dynamiskt-->
-         <ng-container *ngIf="holes[i].moleOrHole == true else mole"> <!--Visas om vi har true-->
-             <img src={{holes[i].hole}} alt="">
-         </ng-container>
-         <ng-template  #mole> <!--Visas om vi har false-->
-             <img  (click)="__count.onPlus()" (click)="holes[i].moleOrHole = true " src={{holes[i].mole}} alt="">    <!--clickhandler för poängen--> 
-         </ng-template>
-     </div>
- </div>
+<div class="center">
+    <div><h1>KILL A POKEMON</h1></div>
+    <form (ngSubmit)="__player.onSubmit()" >        
+        <div class="bold">{{ this.__player.newPlayer.player }} + {{ this.__count.count }}</div>
+        <button class="btn btn-warning" (click)="__player.addPoint()">Save score</button>    
+    </form>
+    <div class="flex">
+        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.game2()" >Start Timer</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+        <div class="bold">{{__timer.remainingTime}} TIME</div> <!--Tid kvar-->
+        <div class="bold">Points {{__count.count}}</div> <!--Poängräknare-->
+    </div> 
+    <div class="flex2">
+        <div class="grid">
+            <div *ngFor="let pipe of __game.holes; let i = index" #newHole [ngClass]="'hole hole' + i" > <!--Loopar över holes för att skapa ett rutnät dynamiskt-->
+                <ng-container *ngIf="__game.holes[i].moleOrHole == true else mole"> <!--Visas om vi har true-->
+                    <img src={{__game.holes[i].hole}} alt="">
+                </ng-container>
+                <ng-template  #mole > <!--Visas om vi har false-->
+                    <img (click)="__count.onPlus()" (click)="__game.holes[i].moleOrHole = true " src={{__game.holes[i].mole}} alt="">    <!--clickhandler för poängen--> 
+                </ng-template>
+            </div>
+        </div>     
+        <div  class="block">
+            <h2>Highscore</h2>
+            <div *ngFor="let topScore of topScores | async | reverse">Name: {{ topScore.data.player }}  points: {{ topScore.data.points }}</div>
+                                        <!--Prenumerrar på observable och en reverse pipe för att vända listan-->
+        </div>
+    </div>
+</div>                               

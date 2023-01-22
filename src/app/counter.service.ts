@@ -1,14 +1,18 @@
 import { Injectable, Input, Output, EventEmitter } from '@angular/core'; //Importerar input, output och eventemitter
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CounterService {
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   
-  @Input() count: number = 0; 
+  @Input() count: number ; 
   @Output() countUpdatePlus = new EventEmitter<number>(); 
 
   
