@@ -26,7 +26,7 @@ export class TimerService {
       } else {
         this.remainingTime = 60; //Låser upp startknappen och återställer remainingTime till 60
         event.target.disabled = false;
-        clearInterval(this.interval) //Avslutar funktionen
+        clearInterval(this.interval) //Avslutar interval
       }
     },1000 )
     

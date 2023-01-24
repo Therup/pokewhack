@@ -1,14 +1,24 @@
 <div class="center">
-    <div><h1>KILL A POKEMON</h1></div>
+    <div class="top"><h1>KILL A POKEMON <img src="https://purplepinupgurupanacheplaza.files.wordpress.com/2016/02/death_pikachu.jpg" alt=""></h1>
     <form (ngSubmit)="__player.onSubmit()" >        
         <div class="bold">{{ this.__player.newPlayer.player }} + {{ this.__count.count }}</div>
-        <button class="btn btn-warning" (click)="__player.addPoint()">Save score</button>    
+        <button class="btn btn-warning" (click)="__player.addPoint()" (click)="clear()">Save score</button>    
     </form>
+    </div>
     <div class="flex">
-        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.game2()" >Start Timer</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.startGame()" >Easy game</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.game()" >Relaxed game</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.startGame2()" >Stressful game</button></div> <!-- Här startar vi nedräkningen samt spelet -->        
         <div class="bold">{{__timer.remainingTime}} TIME</div> <!--Tid kvar-->
         <div class="bold">Points {{__count.count}}</div> <!--Poängräknare-->
     </div> 
+    <div class="flex">
+        <div>Spel med 1 random mole som visas mellan 3-4 sekunder</div>
+        <div>Spel med 1-3 random moles som visas med 4 sekunders mellanrum</div>
+        <div>Spel med 1-3 random moles som visa med random tid 1 - 4 sekunder </div>
+        <div>Tid kvar</div>
+        <div>Poäng</div>
+    </div>
     <div class="flex2">
         <div class="grid">
             <div *ngFor="let pipe of __game.holes; let i = index" #newHole [ngClass]="'hole hole' + i" > <!--Loopar över holes för att skapa ett rutnät dynamiskt-->

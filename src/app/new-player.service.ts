@@ -11,7 +11,7 @@ import { topScore } from './topScore';
 export class NewPlayerService {
 
   playerPoint = this.__count.count
-  nameOfPlayer: any;
+  nameOfPlayer: any; //Observable
   name: any;
   newPlayer: topScore = { player: '', points: this.playerPoint}; //Stoppar in data i newPlayer som vi sedan skickar till firebase
   id: string;
@@ -25,7 +25,7 @@ export class NewPlayerService {
 
   ) {}
 
-  openGame() {  //Lägger in namn på spelaren och skickar os vidare till spelplanen
+  openGame() {  //Lägger in namn på spelaren och skickar oss vidare till spelplanen
     this.newPlayer.player = this.nameOfPlayer
     this.__router.navigate(['game']);
   }
@@ -35,13 +35,13 @@ export class NewPlayerService {
   addPoint() {
     this.newPlayer.points = this.__count.count //Räknarens poäng läggs till hos ny spelare
     console.log(this.newPlayer.points)
-    this.__router.navigate(['']);
+    this.__router.navigate(['game']);
   }
 
   ngOnInit(): void {
     console.log( 100)
     this.__activatedRoute.params.subscribe((p) => { //Vi prenumererar på en observable
-      this.id=p['id'];
+      this.id=p['id']; 
 
     })
     let doc: AngularFirestoreDocument<topScore> = this.__afs.doc('score');

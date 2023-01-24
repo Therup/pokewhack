@@ -1,12 +1,14 @@
 *{
   margin: auto;
   background-color: green;
+    
 }
+
 .center {
     margin: auto;
     justify-content: center;
     text-align: center;
-    
+  
 }
 .flex {
     display: flex;
@@ -15,8 +17,8 @@
 }
 .flex2 {
   display: flex;
-  margin-top: 20px;
   width: 1000px;
+  height: 600px;
 }
 .flex div {
     margin-right: 20px;
@@ -59,5 +61,8 @@
   }
 h1 {
     font-weight: bolder;
+  }
+  .top {
+    display: flex;
   }
 

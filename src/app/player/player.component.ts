@@ -15,7 +15,7 @@ export class PlayerComponent implements OnInit{
   constructor(
     public __player: NewPlayerService,
     public __count: CounterService,
-    public __afs: AngularFirestore,
+    private __afs: AngularFirestore,
   ) {}
   highScoreList!: AngularFirestoreCollection<topScore>;
   topScores: any;

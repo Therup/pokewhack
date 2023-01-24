@@ -16,31 +16,33 @@ import { GameService } from '../game.service';
 })
 export class BoardComponent implements OnInit {
 
-  highScoreList!: AngularFirestoreCollection<topScore>;
-  topScores: any;
+  highScoreList!: AngularFirestoreCollection<topScore>; //Vi kollar på kollektionen
+  topScores: any; //En observable
   points: number;
 
   constructor (
     public __timer: TimerService,  //måste ha för att kunna koppla component med service
     public __count: CounterService, //måste ha för att kunna koppla component med service
-    public __afs: AngularFirestore,
+    private __afs: AngularFirestore,
     public __player: NewPlayerService,
     public __game: GameService
 
   ) {}
 
-
+    clear() {
+      this.__count.count = 0
+    }
 
 
 
 
   ngOnInit(): void {
-    this.highScoreList = this.__afs.collection('score', ref => ref.orderBy('points').limitToLast(10))  // Vi begränsar till 10st i highscorelist  
+    this.highScoreList = this.__afs.collection('score', ref => ref.orderBy('points').limitToLast(10))  // Vi begränsar till 10st i highscorelist och rangordnar efter points  
     this.topScores = this.highScoreList.snapshotChanges().pipe(      
       map(action => {
         return action.map(a => {
-          const data = a.payload.doc.data() as topScore;
-          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as topScore;  //Hämtar på spelare
+          const id = a.payload.doc.id;  //Hämtar ID
           return { id, data }
         })
       })
