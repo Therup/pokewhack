@@ -1,15 +1,28 @@
 <div class="center">
-  <div><img src="https://i.ytimg.com/vi/9x195WZKJ2M/hqdefault.jpg" alt=""></div>
+  <div>
+    <img src="https://i.ytimg.com/vi/9x195WZKJ2M/hqdefault.jpg" alt="" />
+  </div>
   <div>{{ this.__player.newPlayer.player }} + {{ this.__count.count }}</div>
   <div>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" class="form-control" [(ngModel)]="__player.nameOfPlayer" #name="ngModel">
-      <button class="btn btn-primary" (click)="__player.openGame()">start</button>
+    <form action="" #playerName=ngForm>
+    <label for="name">Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      [(ngModel)]="__player.nameOfPlayer"
+      #name="ngModel"
+      required
+    />
+    <button class="btn btn-primary" (click)="__player.openGame()" [disabled]="!playerName.form.valid">start</button>
+  </form>
   </div>
 </div>
 <div class="block">
-<h2>Highscore</h2>
-<div *ngFor="let topScore of topScores | async | reverse">Name: {{ topScore.data.player }}  points: {{ topScore.data.points }}</div>
-</div>                <!--Reverse pipe på vår firestore databas för att vända listan-->
-
+  <h2>Highscore</h2>
+  <div *ngFor="let topScore of topScores | async | reverse"><!--Reverse pipe på vår firestore databas för att vända listan-->
+    Name: {{ topScore.data.player }} points: {{ topScore.data.points }}
+  </div>
+</div>
 
