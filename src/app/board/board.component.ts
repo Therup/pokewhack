@@ -14,7 +14,9 @@ import { GameService } from '../game.service';
 })
 export class BoardComponent implements OnInit {
   highScoreList!: AngularFirestoreCollection<topScore>; //Vi kollar på kollektionen
+  reactionList!: AngularFirestoreCollection<topScore>; //Vi kollar på kollektionen
   topScores: any; //En observable
+  reaction: any
   points: number;
 
   constructor(
@@ -42,5 +44,17 @@ export class BoardComponent implements OnInit {
         });
       })
     );
+    this.reactionList = this.__afs.collection('score', (ref) =>
+    ref.orderBy('reactiontime').limitToLast(1)
+  ); // Vi begränsar till 10st i highscorelist och rangordnar efter points
+  this.reaction = this.reactionList.snapshotChanges().pipe(
+    map((action) => {
+      return action.map((a) => {
+        const data = a.payload.doc.data() as topScore; //Hämtar på spelare
+        const id = a.payload.doc.id; //Hämtar ID
+        return { id, data };
+      });
+    })
+  );
   }
 }

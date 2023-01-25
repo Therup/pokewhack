@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { TimerService } from './timer.service';
 import { CounterService } from './counter.service';
 import { holes } from './holeOrMole';
+import { NewPlayerService } from './new-player.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GameService {
+export class GameService implements OnInit {
   constructor(
     public __timer: TimerService, //måste ha för att kunna koppla component med service
-    public __count: CounterService //måste ha för att kunna koppla component med service
+    public __count: CounterService, //måste ha för att kunna koppla component med service
+    public __player: NewPlayerService
   ) {}
 
   holes: holes[] = [
@@ -156,6 +158,8 @@ export class GameService {
   //Vi tömmer vår array
   //Efter 60 sekunder avslutar vi vår interval och ställer alla booleans till true
 
+  
+
   game() {
     setTimeout(() => {
       for (let i = 0; i < 25; i++) {
@@ -177,9 +181,13 @@ export class GameService {
         setInterval(() => {
           this.idx = []; //Återställer array
         }, 500);
+        this.__player.start = performance.now(); //Vi mäter tiden härifrån
       });
+      
     }, 4000);
   }
+
+
 
   //////Funktion som visar 1 mole åt gången
   //Funktion som inte kan välja samma hål 2 gånger i rad då vi gör en exakt jämförelse mellan numret som dragits och det förra numret som drogs
@@ -201,7 +209,10 @@ export class GameService {
     console.log(this.idx2);
     return this.hole; 
   }
+
+
   mole() {
+    this.__player.start = performance.now();
     const time = this.randomTime(3000, 4000); //Hämtar ett tal för att se hur länge vår mole ska visas
     this.hole = this.randomHole();  //Hämtar ett random hål
     this.holes[this.idx2[0]].moleOrHole = Boolean(false); //Plockar fram en mole i senast valda hål
@@ -209,7 +220,9 @@ export class GameService {
       this.holes[this.idx2[0]].moleOrHole = Boolean(true); //Återställer hålet efter viss tid
       if (this.__timer.remainingTime > 0) this.mole();
     }, time);
+  
   }
+  
   startGame() {
     this.idx2 = [];
     this.mole();
@@ -228,6 +241,7 @@ export class GameService {
     this.mole3();
   }
   mole1() {
+    this.__player.start = performance.now();
     const time = this.randomTime(1000, 4000);
     this.hole = this.randomHole1();
     console.log('mole1 array', this.idx);
@@ -241,6 +255,7 @@ export class GameService {
     }, time);
   }
   mole2() {
+    this.__player.start = performance.now();
     const time = this.randomTime(1500, 4000);
     this.hole = this.randomHole2();
     console.log('mole2 array', this.idx2);
@@ -254,6 +269,7 @@ export class GameService {
     }, time);
   }
   mole3() {
+    this.__player.start = performance.now();
     const time = this.randomTime(2000, 4000);
     this.hole = this.randomHole3();
     console.log('mole1 array', this.idx3);
@@ -299,4 +315,7 @@ export class GameService {
     //console.log(this.idx3)
     return this.hole;
   }
+ngOnInit(): void {
+
+}
 }

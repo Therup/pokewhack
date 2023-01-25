@@ -11,7 +11,12 @@ export class NewPlayerService {
   playerPoint = this.__count.count;
   nameOfPlayer: any; //Observable
   name: any;
-  newPlayer: topScore = { player: '', points: this.playerPoint }; //Stoppar in data i newPlayer som vi sedan skickar till firebase
+  start: number
+  end: number
+  timeTaken: number
+  bestTime: number[] = []
+  playerBestTime:number
+  newPlayer: topScore = { player: '', points: this.playerPoint, reactiontime: this.bestTime[0]  }; //Stoppar in data i newPlayer som vi sedan skickar till firebase
   id: string;
 
   constructor(
@@ -20,6 +25,21 @@ export class NewPlayerService {
     private __activatedRoute: ActivatedRoute,
     public __count: CounterService
   ) {}
+
+  
+    
+
+ 
+reaction() {
+  this.__count.onPlus() //Ger oss poäng
+  this.end = performance.now(); //Här slutar tiden räknas
+  this.timeTaken = Math.trunc( this.end - this.start); //Vi tar bort decimaler
+  this.bestTime.unshift(this.timeTaken)
+  this.bestTime.sort(function(a, b) { //Sorterar så att vi får lägsta värdet först i vår array
+  return a - b; 
+});
+}
+
 
   openGame() {
     //Lägger in namn på spelaren och skickar oss vidare till spelplanen

@@ -1,12 +1,12 @@
 <div class="center">
     <div class="top"><h1>KILL A POKEMON <img src="https://purplepinupgurupanacheplaza.files.wordpress.com/2016/02/death_pikachu.jpg" alt=""></h1>
     <form (ngSubmit)="__player.onSubmit()" >        
-        <div class="bold">{{ this.__player.newPlayer.player }} + {{ this.__count.count }}</div>
+        <div class="bold">{{ this.__player.newPlayer.player }} + {{ this.__count.count }} + {{ this.__player.bestTime[0] }} ms</div>
         <button class="btn btn-warning" (click)="__player.addPoint()" (click)="clear()">Save score</button>    
     </form>
     </div>
     <div class="flex">
-        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.startGame()" >Easy game</button></div> <!-- Här startar vi nedräkningen samt spelet -->
+        <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.startGame()"  >Easy game</button></div> <!-- Här startar vi nedräkningen samt spelet -->
         <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.game()" >Relaxed game</button></div> <!-- Här startar vi nedräkningen samt spelet -->
         <div><button class="bold btn btn-primary" (click)='__timer.playGame($event)'  (click)="__game.startGame2()" >Stressful game</button></div> <!-- Här startar vi nedräkningen samt spelet -->        
         <div class="bold">{{__timer.remainingTime}} TIME</div> <!--Tid kvar-->
@@ -26,7 +26,7 @@
                     <img src={{__game.holes[i].hole}} alt="">
                 </ng-container>
                 <ng-template  #mole > <!--Visas om vi har false-->
-                    <img (click)="__count.onPlus()" (click)="__game.holes[i].moleOrHole = true " src={{__game.holes[i].mole}} alt="">    <!--clickhandler för poängen--> 
+                    <img (click)="__player.reaction()" (click)="__game.holes[i].moleOrHole = true " src={{__game.holes[i].mole}} alt="">    <!--clickhandler för poängen--> 
                 </ng-template>
             </div>
         </div>     
@@ -34,6 +34,9 @@
             <h2>Highscore</h2>
             <div *ngFor="let topScore of topScores | async | reverse">Name: {{ topScore.data.player }}  points: {{ topScore.data.points }}</div>
                                         <!--Prenumerrar på observable och en reverse pipe för att vända listan-->
+            <h2>reactiontime</h2>
+             <div *ngFor="let react of reaction | async | reverse">Name: {{ react.data.player }}  time: {{ react.data.reactiontime }} ms</div>
+                                                                    <!--Prenumerrar på observable och en reverse pipe för att vända listan-->
         </div>
     </div>
 </div>                               
